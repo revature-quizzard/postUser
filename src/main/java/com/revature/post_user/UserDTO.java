@@ -1,4 +1,4 @@
-package com.revature.models;
+package com.revature.post_user;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.revature.models;
+package com.revature.post_user;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
@@ -43,7 +43,7 @@ public class User {
     private int losses;
 
     @DynamoDBAttribute
-    private LocalDateTime registrationDate;
+    private String registrationDate;
 
     @DynamoDBAttribute
     private List<String> gameRecord;
@@ -59,7 +59,7 @@ public class User {
         this.points = 0;
         this.wins = 0;
         this.losses = 0;
-        this.registrationDate = LocalDateTime.now();
+        this.registrationDate = LocalDateTime.now().toString();
         this.gameRecord = new ArrayList<>();
     }
 }
