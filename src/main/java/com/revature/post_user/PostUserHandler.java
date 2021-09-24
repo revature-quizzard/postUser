@@ -18,6 +18,7 @@ public class PostUserHandler implements RequestHandler<APIGatewayProxyRequestEve
      *
      * @param requestEvent will contain information in body
      * @return
+     * @author Robert Ni
      */
     @Override
     public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent requestEvent, Context context) {
