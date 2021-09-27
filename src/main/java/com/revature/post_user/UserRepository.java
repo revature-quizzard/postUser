@@ -1,8 +1,7 @@
-package com.revature.repos;
+package com.revature.post_user;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.revature.models.User;
 import lombok.SneakyThrows;
 
 public class UserRepository {
