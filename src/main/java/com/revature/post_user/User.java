@@ -42,7 +42,7 @@ public class User {
     private String registrationDate;
 
     @DynamoDBAttribute
-    private List<Object> gameRecord;
+    private List<String> gameRecord;
 
     public User(UserDTO userDTO) {
         this.id = userDTO.getId();
