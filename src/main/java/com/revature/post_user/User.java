@@ -21,16 +21,10 @@ public class User {
     private String username;
 
     @DynamoDBAttribute
-    private String email;
+    private List<Object> favoriteSets;
 
     @DynamoDBAttribute
-    private String name;
-
-    @DynamoDBAttribute
-    private List<String> favoriteSets;
-
-    @DynamoDBAttribute
-    private List<String> createdSets;
+    private List<Object> createdSets;
 
     @DynamoDBAttribute
     private String profilePicture;
@@ -48,13 +42,11 @@ public class User {
     private String registrationDate;
 
     @DynamoDBAttribute
-    private List<String> gameRecord;
+    private List<Object> gameRecord;
 
     public User(UserDTO userDTO) {
         this.id = userDTO.getId();
         this.username = userDTO.getUsername();
-        this.email = userDTO.getEmail();
-        this.name = userDTO.getUsername();
         this.favoriteSets = new ArrayList<>();
         this.createdSets = new ArrayList<>();
         this.profilePicture = "";
