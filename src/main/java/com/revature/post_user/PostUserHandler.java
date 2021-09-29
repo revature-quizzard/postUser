@@ -11,7 +11,15 @@ import com.google.gson.GsonBuilder;
 public class PostUserHandler implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
     private static final Gson mapper = new GsonBuilder().setPrettyPrinting().create();
-    private final UserRepository userRepository = UserRepository.getInstance();
+    private final UserRepository userRepository;
+
+    public PostUserHandler() {
+        userRepository = new UserRepository();
+    }
+
+    public PostUserHandler(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     /**
      * This function is used to persist user data to DynamoDB

@@ -6,15 +6,10 @@ import lombok.SneakyThrows;
 
 public class UserRepository {
 
-    private static final UserRepository userRepository = new UserRepository();
     private final DynamoDBMapper dbReader;
 
     public UserRepository() {
         dbReader = new DynamoDBMapper(AmazonDynamoDBClientBuilder.defaultClient());
-    }
-
-    public static UserRepository getInstance() {
-        return userRepository;
     }
 
     @SneakyThrows
