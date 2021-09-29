@@ -6,4 +6,9 @@ import lombok.Data;
 public class UserDTO {
     private String id;
     private String username;
+
+    public boolean isValid() {
+        if (id == null || id.trim().equals("")) return false;
+        return (username != null && !username.trim().equals(""));
+    }
 }
