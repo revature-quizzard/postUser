@@ -7,8 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.revature.post_user.stubs.TestLogger;
 import org.junit.jupiter.api.*;
-
-import java.util.ArrayList;
+import software.amazon.awssdk.http.HttpStatusCode;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -70,6 +69,24 @@ class PostUserHandlerTest {
         APIGatewayProxyResponseEvent actualResponse = sut.handleRequest(mockRequestEvent, mockContext);
 
         verify(mockUserRepository, times(1)).saveUser(any());
+        assertEquals(expectedResponse, actualResponse);
+    }
+
+    @Test
+    public void given_emptyRequestBody_returnsBadRequestStatusCode() {
+        APIGatewayProxyRequestEvent mockRequestEvent = new APIGatewayProxyRequestEvent();
+        mockRequestEvent.withPath("/users");
+        mockRequestEvent.withHttpMethod("POST");
+        mockRequestEvent.withHeaders(null);
+        mockRequestEvent.withBody(null);
+        mockRequestEvent.withQueryStringParameters(null);
+
+        APIGatewayProxyResponseEvent expectedResponse = new APIGatewayProxyResponseEvent();
+        expectedResponse.setStatusCode(HttpStatusCode.BAD_REQUEST);
+
+        APIGatewayProxyResponseEvent actualResponse = sut.handleRequest(mockRequestEvent, mockContext);
+
+        verify(mockUserRepository, times(0)).saveUser(any());
         assertEquals(expectedResponse, actualResponse);
     }
 }
