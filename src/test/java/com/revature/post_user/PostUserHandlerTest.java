@@ -89,4 +89,29 @@ class PostUserHandlerTest {
         verify(mockUserRepository, times(0)).saveUser(any());
         assertEquals(expectedResponse, actualResponse);
     }
+
+    @Test
+    public void given_invalidRequestBody_returnsBadRequestStatusCode() {
+        UserDTO invalidRequestBody = UserDTO.builder()
+                .id("valid")
+                .username(null)
+                .build();
+
+        APIGatewayProxyRequestEvent mockRequestEvent = new APIGatewayProxyRequestEvent();
+        mockRequestEvent.withPath("/users");
+        mockRequestEvent.withHttpMethod("POST");
+        mockRequestEvent.withHeaders(null);
+        mockRequestEvent.withBody(mapper.toJson(invalidRequestBody));
+        mockRequestEvent.withQueryStringParameters(null);
+
+        when(mockUserRepository.saveUser(any())).thenReturn(null);
+
+        APIGatewayProxyResponseEvent expectedResponse = new APIGatewayProxyResponseEvent();
+        expectedResponse.setStatusCode(HttpStatusCode.BAD_REQUEST);
+
+        APIGatewayProxyResponseEvent actualResponse = sut.handleRequest(mockRequestEvent, mockContext);
+
+        verify(mockUserRepository, times(0)).saveUser(any());
+        assertEquals(expectedResponse, actualResponse);
+    }
 }
