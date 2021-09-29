@@ -7,6 +7,7 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import software.amazon.awssdk.http.HttpStatusCode;
 
 public class PostUserHandler implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
@@ -29,6 +30,11 @@ public class PostUserHandler implements RequestHandler<APIGatewayProxyRequestEve
 
         // this is the information sent from the client
         UserDTO userDTO = mapper.fromJson(requestEvent.getBody(), UserDTO.class);
+
+        if (userDTO == null || !userDTO.isValid()) {
+            responseEvent.setStatusCode(HttpStatusCode.BAD_REQUEST);
+            return responseEvent;
+        }
 
         // mapping the info from request to user
         User user = new User(userDTO);
