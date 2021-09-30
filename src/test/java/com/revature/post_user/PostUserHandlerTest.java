@@ -5,6 +5,8 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.revature.post_user.dtos.UserDTO;
+import com.revature.post_user.models.User;
 import com.revature.post_user.stubs.TestLogger;
 import org.junit.jupiter.api.*;
 import software.amazon.awssdk.http.HttpStatusCode;
@@ -13,7 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 class PostUserHandlerTest {
-
     static TestLogger testLogger;
     static final Gson mapper = new GsonBuilder().setPrettyPrinting().create();
 

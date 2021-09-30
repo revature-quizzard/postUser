@@ -7,6 +7,8 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.revature.post_user.dtos.UserDTO;
+import com.revature.post_user.models.User;
 import software.amazon.awssdk.http.HttpStatusCode;
 
 public class PostUserHandler implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
@@ -15,7 +17,7 @@ public class PostUserHandler implements RequestHandler<APIGatewayProxyRequestEve
     private final UserRepository userRepository;
 
     public PostUserHandler() {
-        userRepository = new UserRepository();
+        this.userRepository = UserRepository.getInstance();
     }
 
     public PostUserHandler(UserRepository userRepository) {
@@ -23,9 +25,11 @@ public class PostUserHandler implements RequestHandler<APIGatewayProxyRequestEve
     }
 
     /**
-     * This function is used to persist user data to DynamoDB
+     * This function will take an id and username from that is obtained when Cognito registers. Then, it
+     * will create an empty User model from a template. We do this to store additional fields that Cognito
+     * does not handle.
      *
-     * @param requestEvent will contain information in body
+     * @param requestEvent contains id and username from Cognito
      * @return
      * @author Robert Ni
      */
@@ -36,7 +40,6 @@ public class PostUserHandler implements RequestHandler<APIGatewayProxyRequestEve
         LambdaLogger logger = context.getLogger();
         logger.log("RECEIVED EVENT: " + requestEvent);
 
-        // this is the information sent from the client
         UserDTO userDTO = mapper.fromJson(requestEvent.getBody(), UserDTO.class);
 
         if (userDTO == null || !userDTO.isValid()) {
@@ -44,12 +47,8 @@ public class PostUserHandler implements RequestHandler<APIGatewayProxyRequestEve
             return responseEvent;
         }
 
-        // mapping the info from request to user
         User user = new User(userDTO);
-
-        // store user in database
         responseEvent.setBody(mapper.toJson(userRepository.saveUser(user)));
-
         return responseEvent;
     }
 }
