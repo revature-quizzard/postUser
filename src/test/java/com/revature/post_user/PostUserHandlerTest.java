@@ -84,6 +84,7 @@ class PostUserHandlerTest {
 
         APIGatewayProxyResponseEvent expectedResponse = new APIGatewayProxyResponseEvent();
         expectedResponse.setStatusCode(HttpStatusCode.BAD_REQUEST);
+        expectedResponse.setBody("The provided request body is invalid");
 
         APIGatewayProxyResponseEvent actualResponse = sut.handleRequest(mockRequestEvent, mockContext);
 
@@ -109,6 +110,7 @@ class PostUserHandlerTest {
 
         APIGatewayProxyResponseEvent expectedResponse = new APIGatewayProxyResponseEvent();
         expectedResponse.setStatusCode(HttpStatusCode.BAD_REQUEST);
+        expectedResponse.setBody("The provided request body is invalid");
 
         APIGatewayProxyResponseEvent actualResponse = sut.handleRequest(mockRequestEvent, mockContext);
 
