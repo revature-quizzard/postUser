@@ -10,17 +10,12 @@ import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
 public class UserRepository {
 
-    private static final UserRepository userRepository = new UserRepository();
     private final DynamoDbTable<User> userTable;
 
-    private UserRepository() {
+    public UserRepository() {
         DynamoDbClient db = DynamoDbClient.builder().httpClient(ApacheHttpClient.create()).build();
         DynamoDbEnhancedClient dbClient = DynamoDbEnhancedClient.builder().dynamoDbClient(db).build();
         userTable = dbClient.table("Users", TableSchema.fromBean(User.class));
-    }
-
-    public static UserRepository getInstance() {
-        return userRepository;
     }
 
     /**
