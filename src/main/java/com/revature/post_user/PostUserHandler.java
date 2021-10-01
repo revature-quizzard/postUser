@@ -17,7 +17,7 @@ public class PostUserHandler implements RequestHandler<APIGatewayProxyRequestEve
     private final UserRepository userRepository;
 
     public PostUserHandler() {
-        this.userRepository = UserRepository.getInstance();
+        userRepository = new UserRepository();
     }
 
     public PostUserHandler(UserRepository userRepository) {
@@ -44,6 +44,7 @@ public class PostUserHandler implements RequestHandler<APIGatewayProxyRequestEve
 
         if (userDTO == null || !userDTO.isValid()) {
             responseEvent.setStatusCode(HttpStatusCode.BAD_REQUEST);
+            responseEvent.setBody("The provided request body is invalid");
             return responseEvent;
         }
 
